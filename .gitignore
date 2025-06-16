@@ -3,3 +3,4 @@ raw_data/
 Swin_UNETR-venv/
 med_sam-venv/
 Brain-Tumour-nnUNet/nnUNet_preprocessed
+/sam_vit_b_01ec64.pth
