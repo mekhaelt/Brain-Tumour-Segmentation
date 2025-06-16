@@ -1,0 +1,9 @@
+nnunet-venv/
+raw_data/
+Swin_UNETR-venv/
+med_sam-venv/
+Brain-Tumour-MedSam/checkpoint
+Brain-Tumour-MedSam/data
+Brain-Tumour-MedSam/logs
+Brain-Tumour-MedSam/runs
+Brain-Tumour-nnUNet/nnUNet_preprocessed
