@@ -23,19 +23,19 @@ I used a custom dataset comprising over 5,000 3D MRI scans from both pre-treatme
 ```
 3. Train Model
 When training the MedSAM model use the following command:
-
+```
 python train.py -net sam -mod sam_lora -exp_name ... -sam_ckpt ./checkpoint/sam/sam_vit_b_01ec64.pth -b 1 -dataset brats -thd True  -data_path data -w 8 -four_chan True 
-
+```
 NOTE: After running the training command, 'sam_vit_b_01ec64.pth' will be downloaded. If pretrained weights are not downloaded propperly, you cand do it manually through this link and store it in 'checkpoint/sam/'.
 
 When training the nnUNet model first extract the datasets fingerprint with:
-
+```
 nnUNetv2_plan_and_preprocess -d DATASET_ID --verify_dataset_integrity
-
+```
 Then train the model with:
-
+```
 nnUNetv2_train DATASET_NAME_OR_ID UNET_CONFIGURATION FOLD
-
+```
 When trainnig the SwinUNETR model use train.py
 
 
