@@ -21,22 +21,22 @@ I used a custom dataset comprising over 5,000 3D MRI scans from both pre-treatme
 ```bash
   pip install -r requirements.txt
 ```
-3. Train Model
-When training the MedSAM model use the following command:
+3. Training
+To train the MedSAM model run:
 ```
 python train.py -net sam -mod sam_lora -exp_name ... -sam_ckpt ./checkpoint/sam/sam_vit_b_01ec64.pth -b 1 -dataset brats -thd True  -data_path data -w 8 -four_chan True 
 ```
-NOTE: After running the training command, 'sam_vit_b_01ec64.pth' will be downloaded. If pretrained weights are not downloaded propperly, you cand do it manually through this link and store it in 'checkpoint/sam/'.
+NOTE: After running the training command, 'sam_vit_b_01ec64.pth' will be downloaded. If pretrained weights are not downloaded properly, you can do it manually [here](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth) and store it in 'checkpoint/sam/'.
 
-When training the nnUNet model first extract the datasets fingerprint with:
+To train the nnUNet model first extract the datasets fingerprint with:
 ```
 nnUNetv2_plan_and_preprocess -d DATASET_ID --verify_dataset_integrity
 ```
-Then train the model with:
+Then run:
 ```
 nnUNetv2_train DATASET_NAME_OR_ID UNET_CONFIGURATION FOLD
 ```
-When training the SwinUNETR model use :
+When training the SwinUNETR model run :
 ```
 train.py
 ```
@@ -44,13 +44,13 @@ train.py
 ## Model Overview
 
 ### 🟣 MedSAM
-MedSAM is a medical adaptation of Meta AI’s Segment Anything Model, designed to handle a wide range of segmentation tasks with minimal fine-tuning. In this project, it is extended to 3D medical imaging by training on volumetric MRI data using point-based prompts as guidance signals. The architecture builds on a Vision Transformer encoder that generates patch-wise embeddings, followed by a lightweight mask decoder that predicts segmentation masks conditioned on spatial prompts. In the 3D adaptation, slices are processed either independently or through pseudo-3D strategies, enabling the model to generalize across modalities with minimal supervision. Its promptable nature enables flexible interaction with minimal input, making it ideal for clinical scenarios where annotation is sparse or expensive.
+MedSAM is a medical adaptation of Meta AI’s Segment Anything Model, extended to 3D brain MRI segmentation. It uses a Vision Transformer encoder to extract spatial features and a lightweight decoder to generate masks based on point prompts. In this project, slices are processed in pseudo-3D to handle volumetric data. Its promptable design enables efficient segmentation with minimal input, making it well-suited for interactive or sparse-annotation scenarios.
 
 ### 🟩 nnUNet
-nnUNet, or no new net, is a self-adapting framework built upon the classic U-Net architecture. The core model consists of an encoder-decoder structure with symmetric skip connections, where the encoder down-samples feature maps through convolution and pooling layers, and the decoder reconstructs the segmentation map through transposed convolutions and concatenation with encoder features. What sets nnUNet apart is its automated pipeline: it dynamically configures preprocessing (such as intensity normalization and resampling), chooses between 2D, 3D, or cascade architectures based on dataset size and resolution, and optimizes training hyperparameters without manual tuning. This makes nnUNet exceptionally strong as a baseline for medical image segmentation, offering near state-of-the-art performance on a wide variety of datasets with little intervention.
+nnUNet is a self-configuring segmentation framework built on a U-Net backbone. It features a symmetric encoder-decoder with skip connections and automatically adjusts preprocessing, architecture, and training settings based on dataset properties. It supports 2D, 3D, and cascade variants, and consistently delivers strong performance without manual tuning, making it a reliable benchmark in medical image segmentation.
 
 ### 🟦 SwinUNETR
-SwinUNETR integrates the hierarchical structure of the Swin Transformer with a U-Net inspired encoder-decoder layout. The model first divides the 3D volume into non-overlapping patches and processes them using a series of Swin Transformer blocks. These blocks use window-based multi-head self-attention and shifted windowing to capture both local and global context efficiently while maintaining linear computational complexity with respect to input size. The encoder outputs are passed to a convolutional decoder via skip connections at multiple resolutions, enabling the model to reconstruct high-fidelity segmentation maps. By combining the representational power of transformers with the localization strength of U-Net-like structures, SwinUNETR is particularly effective at modeling complex tumor structures and boundaries in high-resolution MRI volumes.
+SwinUNETR combines Swin Transformers with a U-Net-style encoder-decoder. It splits the input volume into patches, applies window-based self-attention for efficient context modeling, and uses skip connections to reconstruct fine-grained segmentations. This hybrid approach captures both local detail and global structure, making it especially effective for complex 3D tasks like tumor segmentation in MRI scans.
 
 ## Dataset
 
@@ -65,10 +65,31 @@ The dataset used consists of over 5,000 3D MRI volumes of glioma patients both p
 
 To evaluate the effectiveness of modern segmentation architectures, I implemented and compared three state-of-the-art models:
 
+## Results
 
 | Model     | Mean Dice Score |
 | --------- | --------------- |
 | MedSAM    | 0.718           |
 | nnUNet    | 0.806           |
 | SwinUNETR | 0.825           |
+
+SwinUNETR achieved the highest mean Dice score, demonstrating superior performance in segmenting brain tumors from 3D MRI scans. nnUNet also performed well, validating its reputation as a strong baseline for medical image segmentation. While MedSAM scored slightly lower, its flexibility and prompt-based interaction make it a promising tool for rapid or low-supervision scenarios. These results highlight the potential of modern deep learning models, especially transformer-based architectures, to enhance accuracy and efficiency in clinical imaging workflows. With further fine-tuning and data augmentation, all models show potential for real-world deployment in radiology and neuro-oncology.
+
+## Future Plans
+
+- Evaluate generalization performance on other conditions such as **intracranial meningioma** and **brain metastases**
+- Experiment with additional transformer-based architectures, including the [3D TransUNet model](https://arxiv.org/pdf/2310.07781)
+- Integrate uncertainty quantification or ensemble models for more robust clinical predictions
+
+## References
+
+- [Isensee et al., 2021] nnU-Net: A self-configuring method for deep learning-based biomedical image segmentation. *Nature Methods*.
+- [Tang et al., 2023] MedSAM: Segment Anything for Medical Images. arXiv:2306.05396
+- [Hatamizadeh et al., 2022] Swin UNETR: Transformers for semantic segmentation of brain tumors in MRI images. MICCAI 2022.
+
+
+
+
+
+
 
