@@ -22,6 +22,7 @@ I used a custom dataset comprising over 5,000 3D MRI scans from both pre-treatme
   pip install -r requirements.txt
 ```
 3. **Training**
+
 To train the MedSAM model run:
 ```
 python train.py -net sam -mod sam_lora -exp_name ... -sam_ckpt ./checkpoint/sam/sam_vit_b_01ec64.pth -b 1 -dataset brats -thd True  -data_path data -w 8 -four_chan True 
