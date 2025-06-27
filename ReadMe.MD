@@ -45,7 +45,7 @@ train.py
 ## Model Overview
 
 ### 🟣 MedSAM
-MedSAM is a medical adaptation of Meta AI’s Segment Anything Model, extended to 3D brain MRI segmentation. It uses a Vision Transformer encoder to extract spatial features and a lightweight decoder to generate masks based on point prompts. In this project, slices are processed in pseudo-3D to handle volumetric data. Its promptable design enables efficient segmentation with minimal input, making it well-suited for interactive or sparse-annotation scenarios.
+MedSAM is an adaptation of Meta AI’s Segment Anything Model tailored for 3D brain tumor segmentation. This version modifies the patch embedding layer to accept all four MRI modalities (T1, T1ce, T2, FLAIR), enabling full use of multi-parametric input rather than replicating single channels. It also integrates parameter-efficient fine-tuning using LoRA adapters within the Vision Transformer’s MLP and attention layers, allowing the model to learn medical-specific features without retraining the full backbone. Combined with pseudo-3D processing, MedSAM provides a flexible, promptable solution for accurate segmentation in low-supervision clinical settings.
 
 ### 🟩 nnUNet
 nnUNet is a self-configuring segmentation framework built on a U-Net backbone. It features a symmetric encoder-decoder with skip connections and automatically adjusts preprocessing, architecture, and training settings based on dataset properties. It supports 2D, 3D, and cascade variants, and consistently delivers strong performance without manual tuning, making it a reliable benchmark in medical image segmentation.
