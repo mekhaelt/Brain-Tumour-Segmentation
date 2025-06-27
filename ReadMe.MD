@@ -6,12 +6,12 @@ I used a custom dataset comprising over 5,000 3D MRI scans from both pre-treatme
 
 ## Installation
 
-1. Clone the Repository:
+1. **Clone the Repository:**
 ```bash
    git clone https://github.com/mekhaelt/Brain-Tumour-Segmentation
    cd Brain-Tumour-Segmentation
 ```
-2. Set up the Backend:
+2. **Set up the Backend:**
 - Create and activate a virtual environment
 ```bash
   python -m venv venv
@@ -21,7 +21,7 @@ I used a custom dataset comprising over 5,000 3D MRI scans from both pre-treatme
 ```bash
   pip install -r requirements.txt
 ```
-3. Training
+3. **Training**
 To train the MedSAM model run:
 ```
 python train.py -net sam -mod sam_lora -exp_name ... -sam_ckpt ./checkpoint/sam/sam_vit_b_01ec64.pth -b 1 -dataset brats -thd True  -data_path data -w 8 -four_chan True 
