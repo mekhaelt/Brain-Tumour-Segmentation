@@ -1,6 +1,6 @@
 # Brain Tumour Segmentation
 
-This project focuses on automated brain tumor segmentation using advanced deep learning and computer vision techniques applied to 3D medical imaging. Traditionally, this task is time-consuming and manually intensive for radiologists, often requiring expert annotation across multiple imaging modalities. By automating this process, the project aims to drastically reduce segmentation time while improving accuracy and consistency—enabling faster diagnoses, more effective treatment planning, and scalable analysis in both clinical and research settings.
+This project focuses on automated brain tumor segmentation using advanced deep learning and computer vision techniques applied to 3D medical imaging. Traditionally, this task is time-consuming and manually intensive for radiologists, often requiring expert annotation across multiple imaging modalities. By automating this process, the project aims to drastically reduce segmentation time while improving accuracy and consistency, enabling faster diagnoses, more effective treatment planning, and scalable analysis in both clinical and research settings.
 
 I used a custom dataset comprising over 5,000 3D MRI scans from both pre-treatment and post-treatment glioma patients. These scans include T1, T1ce, T2, and FLAIR modalities, and are preprocessed to ensure alignment, normalization, and compatibility with various segmentation frameworks.
 
